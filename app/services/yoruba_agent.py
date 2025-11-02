@@ -7,7 +7,7 @@ import logging
 import os
 from typing import Optional
 from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.models.gemini import GeminiModel
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
@@ -72,12 +72,13 @@ Remember: You're an educational resource promoting understanding and appreciatio
     def __init__(self):
         """Initialize the Yoruba AI Agent."""
         try:
-            # Set OpenAI API key in environment (pydantic-ai uses env variables)
-            if settings.openai_api_key:
-                os.environ['OPENAI_API_KEY'] = settings.openai_api_key
+            # Set Google Gemini API key in environment (pydantic-ai uses env variables)
+            if settings.gemini_api_key:
+                os.environ['GEMINI_API_KEY'] = settings.gemini_api_key
             
-            # Initialize the OpenAI model
-            model = OpenAIModel('gpt-4o-mini')
+            # Initialize the Gemini model
+            # Using gemini-2.5-flash (latest stable version)
+            model = GeminiModel('gemini-2.5-flash')
             
             # Create the agent with the specialized system prompt
             self.agent = Agent(
@@ -85,7 +86,7 @@ Remember: You're an educational resource promoting understanding and appreciatio
                 system_prompt=self.SYSTEM_PROMPT,
             )
             
-            logger.info("Yoruba AI Agent initialized successfully")
+            logger.info("Yoruba AI Agent initialized successfully with Gemini 2.5 Flash")
             
         except Exception as e:
             logger.error(f"Failed to initialize Yoruba AI Agent: {str(e)}")
@@ -112,7 +113,16 @@ Remember: You're an educational resource promoting understanding and appreciatio
             # Get response from the agent
             result = await self.agent.run(enhanced_question)
             
-            response_text = result.data
+            # Extract response text from result
+            # pydantic-ai v0.0.14+ uses .output attribute
+            if hasattr(result, 'output'):
+                response_text = result.output
+            elif hasattr(result, 'data'):
+                response_text = result.data
+            elif hasattr(result, 'content'):
+                response_text = result.content
+            else:
+                response_text = str(result)
             
             logger.info(f"Generated response for question: {question[:50]}...")
             

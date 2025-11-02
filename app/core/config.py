@@ -18,8 +18,8 @@ class Settings(BaseSettings):
     host: str = Field(default="0.0.0.0")
     port: int = Field(default=8000)
     
-    # OpenAI Configuration
-    openai_api_key: str = Field(default="", description="OpenAI API key for the AI agent")
+    # Google Gemini Configuration
+    gemini_api_key: str = Field(default="", description="Google Gemini API key for the AI agent")
     
     # Telex.im Configuration
     telex_api_key: str = Field(default="", description="Telex.im API key")

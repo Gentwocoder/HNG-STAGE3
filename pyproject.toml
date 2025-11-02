@@ -6,6 +6,7 @@ requires-python = ">=3.11.9"
 dependencies = [
     "fastapi[all]",
     "pydantic-ai",
+    "pydantic-ai[gemini]",
     "pydantic-settings",
     "httpx",
     "python-dotenv",

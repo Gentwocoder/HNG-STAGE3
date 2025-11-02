@@ -24,10 +24,10 @@ async def test_configuration():
         print(f"   Debug Mode: {settings.debug}")
         
         # Check critical settings
-        if not settings.openai_api_key:
-            print("⚠️  WARNING: OPENAI_API_KEY not set!")
+        if not settings.gemini_api_key:
+            print("⚠️  WARNING: GEMINI_API_KEY not set!")
         else:
-            print(f"✅ OpenAI API key is configured")
+            print(f"✅ Gemini API key is configured")
         
         return True
     except Exception as e:
