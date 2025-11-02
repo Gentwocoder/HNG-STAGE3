@@ -1,0 +1,10 @@
+fastapi[all]>=0.100.0
+pydantic-ai>=0.0.1
+pydantic-settings>=2.0.0
+httpx>=0.24.0
+python-dotenv>=1.0.0
+uvicorn[standard]>=0.23.0
+redis[hiredis]>=5.0.0
+jsonrpcclient>=4.0.3
+cairosvg>=2.7.0
+minio>=7.1.0
